@@ -22,13 +22,18 @@
             <tr>
         		<th>Microrogannism</th>
                 <th>Score</th>
+                <th>More details</th>>
             </tr>
         </thead>
         	{% for i in result %}   
  			<tr>
 	 			{% for j in i %}
-	 			<th>{{ j }}</th>
-	 			{% endfor %}
+                {% if forloop.last%}
+                <th><a href='{{j}}'>more</th>
+                {% else %}
+                <th>{{ j }}</th>
+                {% endif %}
+              {% endfor %}
  			</tr>
     		{% endfor %}
             

@@ -51,6 +51,7 @@ def get_similar_compound(condon):
         fps2 = AllChem.GetMorganFingerprint(mol2, 2)
 
         score = DataStructs.DiceSimilarity(fps1, fps2)
+        score = round(score,2)
         
         if score > min(top_score):
             min_idx = top_score.index(min(top_score))

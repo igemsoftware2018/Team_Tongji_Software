@@ -14,7 +14,9 @@ def start_with(pattern, text):
     pattern = pattern.lower()
     
     text = re.sub('\W', '', text)
+    text = re.sub('\d', '', text)
     pattern = re.sub('\W', '', pattern)
+    pattern = re.sub('\d', '', pattern)
     
     if pattern != '' and text.startswith(pattern):
         return 1

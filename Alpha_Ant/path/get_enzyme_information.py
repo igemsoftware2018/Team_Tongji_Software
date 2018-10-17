@@ -21,13 +21,15 @@ def enzyme_information(r):
     infor=enzyme_infor[enzyme]
     infor=infor.split('\n')
     result='<p>'+'<b>'+'Reaction ID: '+r+'</br>'
-    for line in infor[0:2]:
-        result+=line+'</br>'
+   
+    result+="<a href='/download/gene/'>"+infor[0]+'</a>'+'&nbsp;&nbsp;&nbsp;(click and acquire gene information)'+'</br>'
+    result+=infor[1]+'</br>'
+    #result+=infor[2]+'</br>'
     result+='</b>+</p><p>'
     infor=infor[2:]
     for line in infor:
         if '#' in line:
-            line.replace('#','')
+            line=line.replace('#','')
             #line.replace('#','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
             result+='</br>'+'<b>'+line+'</b>'+'</br>'
         elif '#' not in line:

@@ -11,7 +11,7 @@
 </style>
 </head>
 <body>
-    <div id="logo"><a href="main.html">
+    <div id="logo"><a href="/Alpha ant/">
         <img class="photo" src="/static/img/logo1.png" width="85px"></a>
     </div>
     <h1 align="center">Results </h1>
@@ -24,9 +24,9 @@
     <li><a href="#table"><button class="pathway" style="vertical-align:middle">
               <span>Reactions </span>
         </button></a></li>
-    <li><a href="#FBA"><button class="pathway" style="vertical-align:middle">
+    <!-- <li><a href="#FBA"><button class="pathway" style="vertical-align:middle">
               <span>FBA </span>
-        </button></a></li>
+        </button></a></li> -->
   </ul>
 </div>
 <style type="text/css">
@@ -52,12 +52,7 @@ path.invis {
     fill: none;
     stroke-width: 0;
 }
-.sizebutton {
-  padding: 10px 20px;
-}
 </style>
-<button class="sizebutton" id="zoom_in">+</button>
-<button class="sizebutton" id="zoom_out">-</button>
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
@@ -162,22 +157,16 @@ path.invis {
       var w = 660,
           h = 700,
           middle = w/2;
-      var linkDistance = 150;
+      var linkDistance = 120;
 
-
-      var zoom = d3.behavior.zoom().scaleExtent([0, 8]).on("zoom", zoomed);
-
-      
       var colors = d3.scale.category20();
+
       var svg = d3.select("body")
             .append("svg:svg")
               .attr("width", w)
               .attr("height", h)
               // .style("z-index", -10)
-              .attr("id", "svg")
-              .append("g")
-                .call(zoom)
-              .append("g");
+              .attr("id", "svg");
 
           svg.append('svg:defs').selectAll('marker')
               .data(['end'])
@@ -200,7 +189,7 @@ path.invis {
 
         var nodes = force.nodes(),
             links = force.links();
-    
+
         var update = function () {
 
             var path = svg.selectAll("path.link")
@@ -254,19 +243,6 @@ path.invis {
                               }
                           });
                         })
-                      .on("mouseover",function(d){
-                          d3.select(this).style("font-size", 30).style("fill", "red")
-                          //this.parentNode.appendChild(this);
-                        //   console.log(this.parentNode.parentNode)
-                        //   svg.insert(this, ":first-child")
-                          //.append("svg:text").append(this)
-                          
-                      })
-                      .on("mouseout",function(d){
-                          d3.select(this).style("font-size", 15).style("fill", "rgb(0,0,0)")
-
-                      })
-
                       
             var node = svg.selectAll("g.node")
                     .data(force.nodes());
@@ -441,56 +417,6 @@ path.invis {
             return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
           };
         }
-
-function zoomed() {
-    svg.attr("transform",
-        "translate(" + zoom.translate() + ")" +
-        "scale(" + zoom.scale() + ")"
-    );
-}
-function interpolateZoom (translate, scale) {
-    var self = this;
-    return d3.transition().duration(350).tween("zoom", function () {
-        var iTranslate = d3.interpolate(zoom.translate(), translate),
-            iScale = d3.interpolate(zoom.scale(), scale);
-        return function (t) {
-            zoom
-                .scale(iScale(t))
-                .translate(iTranslate(t));
-            zoomed();
-        };
-    });
-}
-
-function zoomClick() {
-    var clicked = d3.event.target,
-        direction = 1,
-        factor = 0.2,
-        target_zoom = 1,
-        center = [w / 2, h / 2],
-        extent = zoom.scaleExtent(),
-        translate = zoom.translate(),
-        translate0 = [],
-        l = [],
-        view = {x: translate[0], y: translate[1], k: zoom.scale()};
-
-    d3.event.preventDefault();
-    direction = (this.id === 'zoom_in') ? 1 : -1;
-    target_zoom = zoom.scale() * (1 + factor * direction);
-
-    if (target_zoom < extent[0] || target_zoom > extent[1]) { return false; }
-
-    translate0 = [(center[0] - view.x) / view.k, (center[1] - view.y) / view.k];
-    view.k = target_zoom;
-    l = [translate0[0] * view.k + view.x, translate0[1] * view.k + view.y];
-
-    view.x += center[0] - l[0];
-    view.y += center[1] - l[1];
-
-    interpolateZoom([view.x, view.y], view.k);
-}
-d3.selectAll('button').on('click', zoomClick);
-
     }
 
 function drawGraph() {
@@ -632,15 +558,16 @@ function keepNodesOnTop() {
     <table id="table" align="center" >
             <tr>
         	  <th>Reaction</th>
-              <th>compoundname</th>
+              <th>Compound name</th>
+              <th>Atom conservation</th>>
               <th>Gibbs</th>
-              <th>score</th> 
+              <th>Score</th> 
             </tr>
             {% for i in result %}   
             <tr>
               {% for j in i %}
                 {% if forloop.first%}
-                <th onclick="fba('{{j}}')">{{ j }}</th>
+                <th onclick="fba('{{j}}')"><a href="#blank">{{ j }}</th>
                 {% else %}
                 <th>{{ j }}</th>
                 {% endif %}

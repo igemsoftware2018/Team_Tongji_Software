@@ -50,9 +50,9 @@ def get_fba(request):
         result=fba(r)
         return HttpResponse(result)
 
-def download_gene(request):
-    file=open('data//gibbs.csv','rb')  
+def download_gene(request,gene):
+    file=open('gene.fasta','rb')  
     response =HttpResponse(file)
     response['Content-Type']='application/octet-stream'  
-    response['Content-Disposition']='attachment;filename="gibbs.csv"'  
+    response['Content-Disposition']='attachment;filename="gene.fasta"'  
     return response

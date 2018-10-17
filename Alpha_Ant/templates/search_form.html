@@ -27,17 +27,17 @@
 	            <ul id="select">
 	                <h3>Select</h3>
 	                <li> Microorganism :{{form.Microorganism}} </li>
-                    <div id='organ_suggest' style="display: none;z-index:99;background:#FFF; color:#000;text-align:left">
+                    <div id='organ_suggest' style="display: none;width: 200px; z-index:99;background:#FFF; color:#000;text-align:left;font-size:8px">
                         <ul id='organ_result'>
                         </ul>  
                     </div>
 		            <li> Input :{{form.Input}} </li>
-                    <div id='input_suggest' style="display: none;z-index:99;background:#FFF; color:#000;text-align:left">
+                    <div id='input_suggest' style="display: none;width: 200px;z-index:99;background:#FFF; color:#000;text-align:left;font-size:8px">
                         <ul id='input_result'>
                         </ul>  
                     </div>
 		            <li> Output :{{form.Output}} </li> 
-                    <div id='output_suggest' style="display: none;z-index:99;background:#FFF; color:#000;text-align:left">
+                    <div id='output_suggest' style="display: none;width: 200px;z-index:99;background:#FFF; color:#000;text-align:left;font-size:8px">
                         <ul id='output_result'>
                         </ul>  
                     </div>
@@ -78,7 +78,7 @@ $(document).ready(function(){  //文件加载后执行程序
                 var str=''
                 for (var i=0;i<data.length;i++){
                     //$("#id_Input").append('<br>'+data[i]+'</br>')
-                    str+="<li>"+data[i]+"</li>"
+                    str+="<li style='font-size:10px'>"+data[i]+"</li>"
                 };
                 //将数据展示在下拉框上，实时刷新
                 document.getElementById("organ_result").innerHTML = str;
@@ -123,7 +123,7 @@ $(document).ready(function(){  //文件加载后执行程序
                 for (var i=0;i<data.length;i++){
                     //$("#id_Input").append('<br>'+data[i]+'</br>')
                     name=data[i].split()
-                    str+="<li>"+data[i]+"</li>"
+                    str+="<li style='font-size:10px'>"+data[i]+"</li>"
                 };
                 //将数据展示在下拉框上，实时刷新
                 document.getElementById("input_result").innerHTML = str;
@@ -165,13 +165,13 @@ $(document).ready(function(){  //文件加载后执行程序
                 var str=''
                 for (var i=0;i<data.length;i++){
                     //$("#id_Input").append('<br>'+data[i]+'</br>')
-                    str+="<li>"+data[i]+"</li>"
+                    str+="<li style='font-size:10px'>"+data[i]+"</li>"
                 };
                 //将数据展示在下拉框上，实时刷新
                 document.getElementById("output_result").innerHTML = str;
                 $("#output_suggest").show().css({
                     top:$("#Sel1").offset().top+5,
-                    left:$("#Sel1").offset().left+12,
+                    left:$("#Sel1").offset().left+50,
                     position:'absolute'   //可以覆盖在原来的页面上
                 });
             }

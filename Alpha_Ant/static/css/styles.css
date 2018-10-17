@@ -84,8 +84,19 @@ h1{
 	padding-right:10px;
 	padding-left: -50px;
 }
+#output_suggest{
+	width: 200px;
+	border-radius: 5px;
+	padding-right:10px;
+	padding-left: -50px;
+}
 
-
+#organ_suggest{
+	width: 200px;
+	border-radius: 5px;
+	padding-right:10px;
+	padding-left: -50px;
+}
 div.Sel{
 	font-weight: bold;
 	line-height: 28px;
