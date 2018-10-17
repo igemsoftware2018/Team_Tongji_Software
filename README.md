@@ -13,6 +13,7 @@ You can also download this file and use our tool locally.
   * cobra: a tool used for genome-scale modeling of metabolic networks in both prokaryotes and eukaryotes
 
 ## How to use Alpha Ant?
+  **We strongly recommend to use our [web tool](http://118.31.56.237:8099/Alpha%20ant/), which can search with high-speed**
   After satisfying these requerement, you can start our project by using "python manage.py runserver" in cmd. Then the website will be generated according to the local ip. For example, "http://127.0.0.1:8000/Alpha%20ant/".
   ![example](http://2018.igem.org/wiki/images/a/a1/T--Tongji-Software--django.png)
  
