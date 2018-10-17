@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title >SoftWare-Test</title>
+    <link href="/static/css/stylesRS.css" type="text/css"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/favicon4.ico" >
+    <meta http-equiv="page-Enter" content="revealTrans(Duration=3.0,Transition=23)">
+</head>
+<body>
+    <div id="logo"><a href="/Alpha ant/">
+        <img class="photo" src="/static/img/logo1.png" width="85px"></a>
+    </div>
+    <h1 align="center">SMILES  Similarity</h1>
+   <!--  {% comment %}
+    {% for i in result %}  
+    <h5>{{ i }}</h5>  
+    {% endfor %}
+    {% endcomment %} -->
+    
+    <table  align="center" >
+        <thead>
+            <tr>
+                <th>Compound ID</th>
+                <th>Compound Name</th>
+                <th>SMILES</th>
+                <th>Similarity</th>
+            </tr>
+        </thead>
+            {% for i in result %}   
+            <tr>
+                {% for j in i %}
+                <th>{{ j }}</th>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+    <div id="picture">
+        {% for i in result %}
+            {% if forloop.first %}   
+              {% for j in i %}
+                {% if forloop.first%}
+                     <img src="/static/compound_img/{{j}}.jpg" width="200%" >
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+        {% endfor %}         
+       
+    </div> 
+    <div id="picture2"> 
+        <img src="/static/compound_img/smiles_img.png" width="60%">
+    </div>
+    <a href="/multi_sysytem/">
+        </table>    
+        <button class="button"style="vertical-align:middle">
+            <span>Return </span>
+        </button>
+    </a>
+    <div id="pattern">
+        <img  src="/static/img/back22.png" width="100%">
+    </div> 
+</body>
+</html>

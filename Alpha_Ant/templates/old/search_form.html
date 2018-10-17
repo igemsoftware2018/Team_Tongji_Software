@@ -1,0 +1,75 @@
+<html>
+<head>
+    <title>Ordinary Search</title>
+     <link href="/static/css/styles.css" type="text/css"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/favicon4.ico" >
+    <meta http-equiv="page-Enter" content="revealTrans(Duration=3.0,Transition=23)">
+    <meta http-equiv="page-Exit"content="revealTrans(Duration=1.0,Transition=12)">
+
+</head>
+<body>
+    <div class=.bg-pan-left></div>
+    <div id="logo"><a href="/Alpha ant/">
+        <img class="photo" src="/static/img/logo1.png" width="85px"></a>
+    </div>
+    <h1 align="center">Ordinary Search</h1>
+    <div class="fun">
+        <ul id ="fun">
+            <li ><a href="/search/"><span id="one">- Ordinary Search</span></a></li>
+            <li ><a href="/recommendation/">- Organism Recommendation</a></li>
+            <li ><a href="/multi_sysytem/">- SMILES  Similarity</a></li>
+        </ul>        
+    </div>
+    <div class="slide" id="one">
+    	<form action="/results/" method="get">
+	        <div class="Sel" id="Sel1" >
+	            <ul id="select">
+	                <h3>Select</h3>
+	                <li> Microorganism :{{form.Microorganism}} </li> 
+		            <li> Input :{{form.Input}} </li>  
+		            <li> Output :{{form.Output}} </li> 
+		            <li> Maxlength :{{form.MaxLength}} </li>
+		            <li> Results Conservation :{{form.result_conservation}} </li> 
+	           </ul>
+	        </div> 
+	        <div class="Sel" id ="Sel2">
+	            <ul id="selectScore">
+	                <h3 >Select  Score</h3>            
+	                <li> Gibbs :{{form.Gibbs}} </li>
+                    <li> Toxicity :{{form.Toxicity}} </li>               
+                    <li> Frequency :{{form.Frequency}} </li>  
+                    <li> Required :{{form.requrired}} </li>
+                    <li><span style="word-spacing:0.5em;">Not required</span> :{{form.not_requrired}} </li>
+	            </ul>      
+	        </div>
+	     	<div id="sub">
+	        	<input type="submit" value="Submit" >
+	        </div>
+	    </form>
+    </div>
+
+    <ul class="tabs">
+        <li>Wanna a path to a dreamy compound?</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Adjust the weights of different criteria;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Enter required or not required compound;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Find more detailed pathway information;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Support one-direction search.</li>
+    </ul>
+
+	
+     <div id="pattern">
+        <img class="photo" src="/static/img/backo.png" width="100%">
+    </div>  
+    <div class="left" >
+       <a href="/multi_sysytem/"> 
+        <img class="le" src="/static/img/left.png" width="50px"></a>
+    </div>   
+    <div class="right" >
+        <a href="/recommendation/"> 
+        <img class="ri" src="/static/img/right.png" width="50px"></a>
+    </div>
+</body>
+</html>
+
+  

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title >SoftWare-Test</title>
+    <link href="/static/css/stylesR.css" type="text/css"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/favicon4.ico" >
+    <meta http-equiv="page-Enter" content="revealTrans(Duration=3.0,Transition=23)">
+</head>
+<body>
+    <div id="logo"><a href="/Alpha ant/">
+        <img class="photo" src="/static/img/logo1.png" width="85px"></a>
+    </div>
+    <h1 align="center">Results </h1>
+   <!--  {% comment %}
+    {% for i in result %}  
+    <h5>{{ i }}</h5>  
+    {% endfor %}
+    {% endcomment %} -->
+    <table  align="center" >
+        <thead>
+            <tr>
+        		<th>Microrogannism</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        	{% for i in result %}   
+ 			<tr>
+	 			{% for j in i %}
+	 			<th>{{ j }}</th>
+	 			{% endfor %}
+ 			</tr>
+    		{% endfor %}
+            
+    <a href="/recommendation/">
+        </table>    
+        <button class="button"style="vertical-align:middle">
+            <span>Return </span>
+        </button>
+    </a>
+    <div id="pattern">
+        <img class="photo" src="/static/img/back3.png" width="100%">
+    </div> 
+</body>
+</html>

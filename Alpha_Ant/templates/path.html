@@ -1,0 +1,591 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title >SoftWare-Test</title>
+    <link href="/static/css/stylesR2.css" type="text/css"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/favicon4.ico" >
+    <meta http-equiv="page-Enter" content="revealTrans(Duration=3.0,Transition=23)">
+<style type="text/css">
+
+</style>
+</head>
+<body>
+    <div id="logo"><a href="/Alpha ant/">
+        <img class="photo" src="/static/img/logo1.png" width="85px"></a>
+    </div>
+    <h1 align="center">Results </h1>
+
+<div class="path">
+  <ul>
+    <li><a href="#js"><button class="pathway" style="vertical-align:middle">
+              <span>Pathway Network  </span>
+        </button></a></li>
+    <li><a href="#table"><button class="pathway" style="vertical-align:middle">
+              <span>Reactions </span>
+        </button></a></li>
+    <!-- <li><a href="#FBA"><button class="pathway" style="vertical-align:middle">
+              <span>FBA </span>
+        </button></a></li> -->
+  </ul>
+</div>
+<style type="text/css">
+
+
+body {
+  color: black;
+}
+text {
+    fill: black;
+    font-family: 'Open Sans';
+}
+circle {
+  stroke: black;
+  stroke-width: 1.5px;
+}
+path.link, path.textpath {
+    fill: none;
+    stroke: black;
+    stroke-width: 0.5px;
+}
+path.invis {
+    fill: none;
+    stroke-width: 0;
+}
+</style>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript">
+    var graph_data='{{graph_data}}'
+    //处理图数据
+    graph_data=graph_data.split('&amp;');
+    //console.log(graph_data)
+    var edges_data=new Array();
+    for(var i=0;i<graph_data.length;i++)
+    {
+      reaction=graph_data[i].split('$');
+      var dic={};
+      dic.source={id:parseInt(reaction[0].substr(1)),label:reaction[0]};
+      dic.target={id:parseInt(reaction[1].substr(1)),label:reaction[1]};
+      dic.value=reaction[2];
+      edges_data.push(dic);
+    };
+    var data={edges:edges_data}
+    //console.log(data)
+    /*var data = {
+          edges: [
+              {
+                source: {id: 2, label: "C00002"},         //id 即位编号 eg：C00509，id为509
+                target: {id: 8, label: "C00008"},
+                value: "R00001"
+              },
+              {
+                source: {id: 2, label: "C00002"},
+                target: {id: 8, label: "C00008"},
+                value: "R00002"
+              },
+              {
+                source: {id: 2, label: "C00002"},
+                target: {id: 8, label: "C00008"},
+                value: "R00003"
+              },
+              {
+                source: {id: 8, label: "C00008"},
+                target: {id: 9, label: "C00009"},
+                value: "R00004"
+              },
+              {
+                source: {id: 8, label: "C00008"},
+                target: {id: 9, label: "C00009"},
+                value: "R00005"
+              },
+              {
+                source: {id: 8, label: "C00008"},
+                target: {id: 9, label: "C00009"},
+                value: "R00006"
+              },
+          ]
+    };*/
+
+    function myGraph() {
+      this.addNode = function (n) {
+          if (!findNode(n.id)) {
+              nodes.push({"id": n.id, "label": n.label});
+              update();
+          }
+      };
+
+      this.addLink = function (source, target, value) {
+          links.push({"source": findNode(source.id), "target": findNode(target.id), "value": value});
+          update();
+      };
+
+      this.initialize = function() {
+        data.edges.forEach(function(d) {
+            graph.addNode(d.source);
+            graph.addNode(d.target);
+            graph.addLink(d.source, d.target, d.value);
+        });
+      };
+
+      var findNode = function (nodeId) {
+          for (var i in nodes) {
+              if (nodes[i].id === nodeId) {
+                return nodes[i];
+              }
+          };
+      };
+
+      var countSiblingLinks = function(source, target) {
+          var count = 0;
+          for(var i = 0; i < links.length; ++i){
+              if( (links[i].source.id == source.id && links[i].target.id == target.id) || (links[i].source.id == target.id && links[i].target.id == source.id) )
+                  count++;
+          };
+          return count;
+      };
+
+      var getSiblingLinks = function(source, target) {
+          var siblings = [];
+          for(var i = 0; i < links.length; ++i){
+              if( (links[i].source.id == source.id && links[i].target.id == target.id) || (links[i].source.id == target.id && links[i].target.id == source.id) )
+                  siblings.push(links[i].value);
+          };
+          return siblings;
+      };
+      //这里设置页面大小
+      var w = 660,
+          h = 700,
+          middle = w/2;
+      var linkDistance = 120;
+
+      var colors = d3.scale.category20();
+
+      var svg = d3.select("body")
+            .append("svg:svg")
+              .attr("width", w)
+              .attr("height", h)
+              // .style("z-index", -10)
+              .attr("id", "svg");
+
+          svg.append('svg:defs').selectAll('marker')
+              .data(['end'])
+              .enter()
+            .append('svg:marker')
+              .attr({'id': "arrowhead",
+                     'viewBox':'0 -5 10 10',
+                     'refX': 40,
+                     'refY': 3,
+                     'orient':'auto',
+                     'markerWidth': 20,
+                     'markerHeight': 20,
+                     'markerUnits': "strokeWidth",
+                     'xoverflow':'visible'})
+            .append('svg:path')
+              .attr('d', 'M0,-5L10,0L0,5')
+              .attr('fill', '#ccc');
+
+        var force = d3.layout.force();
+
+        var nodes = force.nodes(),
+            links = force.links();
+
+        var update = function () {
+
+            var path = svg.selectAll("path.link")
+                    .data(force.links());
+
+                path.enter().append("svg:path")
+                    .attr("id", function (d) {
+                        return d.source.id + "-" + d.value + "-" + d.target.id;
+                    })
+                    .attr("class", "link")
+                    .attr('marker-end','url(#arrowhead)');
+
+                path.exit().remove();
+
+            var pathInvis = svg.selectAll("path.invis")
+                    .data(force.links());
+
+                pathInvis.enter().append("svg:path")
+                    .attr("id", function (d) {
+                        return "invis_" + d.source.id + "-" + d.value + "-" + d.target.id;
+                    })
+                    .attr("class", "invis");
+
+                pathInvis.exit().remove();
+
+            var pathLabel = svg.selectAll(".pathLabel")
+                    .data(force.links());
+
+                pathLabel.enter().append("g").append("svg:text")
+                    .attr("class", "pathLabel")
+                    .append("svg:textPath")
+                      .attr("startOffset", "50%")
+                      .attr("text-anchor", "middle")
+                      .attr("xlink:href", function(d) { return "#invis_" + d.source.id + "-" + d.value + "-" + d.target.id; })
+                      .style("fill", "#000")
+                      .style("font-size", 15)
+                      .text(function(d) { return d.value; })
+                      .on("click",function(d){
+                          r_num=d.value
+                          reaction={'reaction':r_num}
+                          $.ajax({
+                              url:"/reaction_ajax/",
+                              type:"POST",
+                              data:reaction,
+                              async:false,
+                              success:function(data){
+                                  document.getElementById("blank").innerHTML=data
+
+                                  var div_top=document.getElementById("blank").offsetTop;
+                                  window.scrollTo(0, div_top);
+                              }
+                          });
+                        })
+                      
+            var node = svg.selectAll("g.node")
+                    .data(force.nodes());
+
+            var nodeEnter = node.enter().append("g")
+                    .attr("class", "node")
+                    .call(force.drag);
+
+                nodeEnter.append("svg:circle")
+                        .attr("r", 30)
+                        .attr("id", function (d) {
+                            return "Node;" + d.id;
+                        })
+                        .attr("class", "nodeStrokeClass")
+                        .attr("fill", "#0db7ed")
+                        .on("click",function(d){
+                            // 化合物信息获取
+                            
+                            compound_number=d.label;
+                            data={'number':compound_number}
+                            $.ajax({
+                                url:"/compound_name_ajax/",
+                                type:"POST",
+                                data:data,
+                                async:false,
+                                success:function(data){
+                                    data=data.split("$")
+                                    //console.log(data)
+                                    //表格数据加载
+                                    document.getElementById("compound_number").innerHTML = compound_number;
+                                    document.getElementById("name").innerHTML = data[0];
+                                    document.getElementById("picture").innerHTML = "<img "+"src='/static/compound_img/"+compound_number+".jpg' "+"height='100px'>";
+                                    document.getElementById("formula").innerHTML = data[1];
+                                    // document.getElementById("weight").innerHTML = data[2];
+                                    document.getElementById("smile").innerHTML = data[3];
+                                    document.getElementById("inchi").innerHTML = data[4];
+                                    document.getElementById("charge").innerHTML = data[5];
+                                    document.getElementById("MolecularWeight").innerHTML = data[6];
+                                    document.getElementById("HeavyAtoms").innerHTML = data[7];
+                                    document.getElementById("MolecularVolume").innerHTML = data[8];
+                                    document.getElementById("RotatableBonds").innerHTML = data[9];
+                                    document.getElementById("HydrogenBondDonors").innerHTML = data[10];
+                                    document.getElementById("HydrogenBondAcceptors").innerHTML = data[11];
+                                    document.getElementById("SlogP").innerHTML = data[12];
+                                    document.getElementById("TPSA").innerHTML = data[13];
+                                }
+                            });
+                        })
+
+                nodeEnter.append("svg:text")
+                        .attr("class", "textClass")
+                        .attr("x", -25)
+                        .attr("y", ".31em")
+                        .text(function (d) {
+                            return d.label;
+                        })
+                        .on("click",function(d){
+                            compound_number=d.label;
+                            data={'number':compound_number}
+                            $.ajax({
+                                url:"/compound_name_ajax/",
+                                type:"POST",
+                                data:data,
+                                async:false,
+                                success:function(data){
+                                    data=data.split("$")
+                                    //console.log(data)
+                                    //表格数据加载
+                                    document.getElementById("compound_number").innerHTML = compound_number;
+                                    document.getElementById("name").innerHTML = data[0];
+                                    document.getElementById("picture").innerHTML = "<img "+"src='/static/compound_img/"+compound_number+".jpg' "+"height='100px'>";
+                                    document.getElementById("formula").innerHTML = data[1];
+                                    // document.getElementById("weight").innerHTML = data[2];
+                                    document.getElementById("smile").innerHTML = data[3];
+                                    document.getElementById("inchi").innerHTML = data[4];
+                                    document.getElementById("charge").innerHTML = data[5];
+                                    document.getElementById("MolecularWeight").innerHTML = data[6];
+                                    document.getElementById("HeavyAtoms").innerHTML = data[7];
+                                    document.getElementById("MolecularVolume").innerHTML = data[8];
+                                    document.getElementById("RotatableBonds").innerHTML = data[9];
+                                    document.getElementById("HydrogenBondDonors").innerHTML = data[10];
+                                    document.getElementById("HydrogenBondAcceptors").innerHTML = data[11];
+                                    document.getElementById("SlogP").innerHTML = data[12];
+                                    document.getElementById("TPSA").innerHTML = data[13];
+                                }
+                            });
+                        });
+
+                node.exit().remove();
+
+                function arcPath(leftHand, d) {
+                    var x1 = leftHand ? d.source.x : d.target.x,
+                        y1 = leftHand ? d.source.y : d.target.y,
+                        x2 = leftHand ? d.target.x : d.source.x,
+                        y2 = leftHand ? d.target.y : d.source.y,
+                        dx = x2 - x1,
+                        dy = y2 - y1,
+                        dr = Math.sqrt(dx * dx + dy * dy),
+                        drx = dr,
+                        dry = dr,
+                        sweep = leftHand ? 0 : 1;
+                        siblingCount = countSiblingLinks(d.source, d.target)
+                        xRotation = 0,
+                        largeArc = 0;
+
+                        if (siblingCount > 1) {
+                            var siblings = getSiblingLinks(d.source, d.target);
+                            // console.log(siblings);
+                            var arcScale = d3.scale.ordinal()
+                                                    .domain(siblings)
+                                                    .rangePoints([1, siblingCount]);
+                            drx = drx/(1 + (2/(siblingCount)) * (arcScale(d.value) - 1));
+                            dry = dry/(1 + (2/(siblingCount)) * (arcScale(d.value) - 1));
+                        }
+
+                    return "M" + x1 + "," + y1 + "A" + drx + ", " + dry + " " + xRotation + ", " + largeArc + ", " + sweep + " " + x2 + "," + y2;
+                }
+
+                force.on("tick", function(e) {
+                    var q = d3.geom.quadtree(nodes),
+                        i = 0,
+                        n = nodes.length,
+                        k = .1 * e.alpha;
+
+                    while (++i < n) q.visit(collide(nodes[i]));
+
+                    node.attr("transform", function (d) {
+                        return "translate(" + d.x + "," + d.y + ")";
+                    });
+
+                    path.attr("d", function(d) {
+                        return arcPath(true, d);
+                    });
+
+                    pathInvis.attr("d", function(d) {
+                        return arcPath(d.source.x < d.target.x, d);
+                    });
+                });
+
+                force
+                        .charge(-10000)
+                        .friction(0.5)
+                        .linkDistance(linkDistance)
+                        .size([w, h])
+                        .start();
+                keepNodesOnTop();
+
+        }
+
+        update();
+
+        function collide(node) {
+          var r = node.radius + 16,
+              nx1 = node.x - r,
+              nx2 = node.x + r,
+              ny1 = node.y - r,
+              ny2 = node.y + r;
+          return function(quad, x1, y1, x2, y2) {
+            if (quad.point && (quad.point !== node)) {
+              var x = node.x - quad.point.x,
+                  y = node.y - quad.point.y,
+                  l = Math.sqrt(x * x + y * y),
+                  r = node.radius + quad.point.radius;
+              if (l < r) {
+                l = (l - r) / l * .5;
+                node.x -= x *= l;
+                node.y -= y *= l;
+                quad.point.x += x;
+                quad.point.y += y;
+              }
+            }
+            return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+          };
+        }
+    }
+
+function drawGraph() {
+    graph = new myGraph();
+    graph.initialize();
+}
+
+drawGraph();
+
+function keepNodesOnTop() {
+    $(".nodeStrokeClass").each(function( index ) {
+        var gNode = this.parentNode;
+        gNode.parentNode.appendChild(gNode);
+    });
+}
+
+</script>
+<div class="right">
+    <table  align="center" >
+           <tr>
+                <th>Cnum in KEGG</th>
+                <td id='compound_number'>11</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td id='name'>11</td>
+            </tr>
+            <tr>
+                <th>Structure</th>
+                <td id='picture'>
+                <img src="/static/img/pic1.gif" height="100px">
+                </td>
+            </tr>
+            <tr>
+                <th>Formula</th>
+                <td id='formula'>1 </td>    
+            </tr>
+            <!-- <tr>
+                <th>Mol-Weight</th>
+                <td id='weight'>1</td>    
+            </tr> -->
+            <tr>
+                <th>SMILES</th>
+                <td id='smile'>1</td>    
+            </tr>
+            <tr>
+                <th>InchI</th> 
+                <td id='inchi'>1</td>    
+            </tr>
+            <tr>
+                <th>Charge</th>
+                <td id='charge'>1</td>    
+            </tr>
+            <tr>
+                <th>MolecularWeight</th>
+                <td id='MolecularWeight'>1</td>    
+            </tr>
+            <tr>
+                <th>HeavyAtoms</th>
+                <td id='HeavyAtoms'>1</td>    
+            </tr>
+            <tr>
+                <th>MolecularVolume</th>
+                <td id='MolecularVolume'>1</td>    
+            </tr>
+            <tr>
+                <th>RotatableBonds</th>
+                <td id='RotatableBonds'>1</td>    
+            </tr>
+            <tr>
+                <th>HydrogenBondDonors</th>
+                <td id='HydrogenBondDonors'>1</td>    
+            </tr>
+            <tr>
+                <th>HydrogenBondAcceptors</th>
+                <td id='HydrogenBondAcceptors'>1</td>    
+            </tr>
+            <tr>
+                <th>SLogP</th>
+                <td id='SlogP'>1</td>    
+            </tr>
+            <tr>
+                <th>TPSA</th>
+                <td id='TPSA'>1</td>    
+            </tr>
+        </table>
+</div>
+<script type="text/javascript">
+  function fba(j){
+    // 获取fba的信息
+    r={'r':j}
+    $.ajax({
+      url:"/fba_ajax/",
+      type:"POST",
+      data:r,
+      async:false,
+      success:function(data){
+      	if (data==''){
+      		document.getElementById("blank").innerHTML ='None result'
+      	}
+      	else if (data!=''){
+      		document.getElementById("blank").innerHTML =data
+      	};   
+      }
+    });
+  };
+</script>
+
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript">
+	//网状图缩放
+	$(document).ready(function(){
+		$("#svg").mousewheel(function(event,delata){
+			//document.getElementById("svg").style.WebkitTransform="scale(0.5)";
+			// var node = svg.selectAll("g.node")
+			// var nodeEnter = node.enter().append("g")
+			// nodeEnter.attr('r',15)
+			// console.log($("#svg").offset().top)
+			// var h=$("#svg").height();
+			// var w=$("#svg").width();
+			// $("#svg").transform(scale(0.5))
+			// if (delata==1){
+			// 	h=h*1.1
+			// 	w=w*1.1
+			// }
+			// else if (delata==-1){
+			// 	h=h*0.9
+			// 	w=w*0.9
+			// }
+		
+			//console.log($("#svg").height())
+		});
+    });
+</script>
+
+ <div id ="js"></div>
+
+<!-- <div id="table"> -->
+    <table id="table" align="center" >
+            <tr>
+        	  <th>Reaction</th>
+              <th>Compound name</th>
+              <th>Atom conservation</th>>
+              <th>Gibbs</th>
+              <th>Score</th> 
+            </tr>
+            {% for i in result %}   
+            <tr>
+              {% for j in i %}
+                {% if forloop.first%}
+                <th onclick="fba('{{j}}')"><a href="#blank">{{ j }}</th>
+                {% else %}
+                <th>{{ j }}</th>
+                {% endif %}
+              {% endfor %}
+            </tr>
+            {% endfor %}          
+      </table> 
+
+    <div id="blank"><p></p></div>
+  <!--   <div id="FBA"></div> -->
+   <a href="javascript:history.go(-1)">   
+        <button class="button"style="vertical-align:middle">
+            <span>Return</span>
+        </button>
+    </a>
+    <div id="pattern">
+        <img  src="/static/img/backo.png" width="100%">
+    </div> 
+    
+</body>
+</html>

@@ -1,0 +1,63 @@
+<html>
+<head>
+    <title>SMILES  Similarity</title>
+     <link href="/static/css/styles3.css" type="text/css"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/favicon4.ico" >
+    <meta http-equiv="page-Enter" content="revealTrans(Duration=3.0,Transition=23)">
+    <meta http-equiv="page-Exit"content="revealTrans(Duration=1.0,Transition=12)">
+
+</head>
+<body>
+    <div class=.bg-pan-left></div>
+    <div id="logo"><a href="/Alpha ant/">
+        <img class="photo" src="/static/img/logo1.png" width="85px"></a>
+    </div>
+    <h1 align="center">SMILES  Similarity</h1>
+    <div class="fun">
+        <ul id ="fun">
+            <li id="li1"><a href="/search/">- Ordinary Search</a></li>
+            <li id="li2"><a href="/recommendation/">- Organism Recommendation</a></li>
+            <li id="li3"><a href="/multi_sysytem/"><span id="one">- SMILES  Similarity</span></a></li>
+        </ul>        
+    </div>
+
+    <div class="slide" id="three">
+    	<form action="/multi_sysytem_results/" method="get">
+	        <div class="Sel" id="Sel1" >
+	            <ul id="select">
+	                <!-- <h3>Select</h3> -->
+	                <li> SMILES :{{form.smiles}} </li> 
+		            <li> Max Display :{{form.MaxLength}} </li>  
+		           
+	           </ul>
+	        </div>
+	     	<div id="sub">
+			    <input type="submit" value="Submit" >
+		    </div>
+	    </form>
+    </div> 
+
+    <ul class="tabs">
+        <li>Do you want to compare structure similarity between two compound?</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">For ordinary compound in database or newly synthesized compound ;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Inspire you to come up with a new way to pathway design;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Help to construct novel pathway.</li>
+    </ul>
+
+	
+     <div id="pattern">
+        <img class="photo" src="/static/img/back22.png" width="100%">
+    </div>  
+    <div class="left" >
+        <a href="/recommendation/"> 
+        <img class="le" src="/static/img/left.png" width="50px"></a>
+    </div>   
+    <div class="right" > 
+        <a href="/search/">   
+        <img class="ri" src="/static/img/right.png" width="50px"></a>
+    </div>
+</body>
+</html>
+
+  

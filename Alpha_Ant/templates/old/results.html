@@ -1,0 +1,33 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title >SoftWare-Test</title>
+</head>
+<body>
+    <h1 align="center">Results </h1>
+    {% comment %}
+    {% for i in result %}  
+    <h5>{{ i }}</h5>  
+    {% endfor %}
+    {% endcomment %}
+    
+    <table border="1" align="center" cellspacing="0" cellpadding="0">
+    	<tr bgcolor="aqua">
+    		<th>Reaction</th>
+            <th>Rout</th>
+            <th>Score</th>
+            <th>Gibbs</th>
+            <th>Enzyme</th>
+            <th>compound name</th>
+        </tr>
+ 		{% for i in result %}   
+ 		<tr>
+ 			{% for j in i %}
+ 			<th>{{ j }}</th>
+ 			{% endfor %}
+ 		</tr>
+    	{% endfor %}
+    </table>
+    
+</body>
+</html>

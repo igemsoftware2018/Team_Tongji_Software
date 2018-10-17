@@ -1,0 +1,217 @@
+<html>
+<head>
+    <title>Ordinary Search</title>
+     <link href="/static/css/styles.css" type="text/css"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/favicon4.ico" >
+    <meta http-equiv="page-Enter" content="revealTrans(Duration=3.0,Transition=23)">
+    <meta http-equiv="page-Exit"content="revealTrans(Duration=1.0,Transition=12)">
+
+</head>
+<body>
+    <div class=.bg-pan-left></div>
+    <div id="logo"><a href="/Alpha ant/">
+        <img class="photo" src="/static/img/logo1.png" width="85px"></a>
+    </div>
+    <h1 align="center">Ordinary Search</h1>
+    <div class="fun">
+        <ul id ="fun">
+            <li ><a href="/search/"><span id="one">- Ordinary Search</span></a></li>
+            <li ><a href="/recommendation/">- Organism Recommendation</a></li>
+            <li ><a href="/multi_sysytem/">- SMILES  Similarity</a></li>
+        </ul>        
+    </div>
+    <div class="slide" id="one">
+    	<form action="/results/" method="get">
+	        <div class="Sel" id="Sel1" >
+	            <ul id="select">
+	                <h3>Select</h3>
+	                <li> Microorganism :{{form.Microorganism}} </li>
+                    <div id='organ_suggest' style="display: none;z-index:99;background:#FFF; color:#000;text-align:left">
+                        <ul id='organ_result'>
+                        </ul>  
+                    </div>
+		            <li> Input :{{form.Input}} </li>
+                    <div id='input_suggest' style="display: none;z-index:99;background:#FFF; color:#000;text-align:left">
+                        <ul id='input_result'>
+                        </ul>  
+                    </div>
+		            <li> Output :{{form.Output}} </li> 
+                    <div id='output_suggest' style="display: none;z-index:99;background:#FFF; color:#000;text-align:left">
+                        <ul id='output_result'>
+                        </ul>  
+                    </div>
+		            <li> Maxlength :{{form.MaxLength}} </li>
+		            <li> Max Display:{{form.result_conservation}} </li> 
+	           </ul>
+	        </div> 
+	        <div class="Sel" id ="Sel2">
+	            <ul id="selectScore">
+	                <h3 >Select  Score</h3>            
+	                <li> Gibbs :{{form.Gibbs}} </li>
+                    <li> Toxicity :{{form.Toxicity}} </li>               
+                    <li> Frequency :{{form.Frequency}} </li>  
+                    <li> Required :{{form.requrired}} </li>
+                    <li><span style="word-spacing:0.5em;">Not required</span> :{{form.not_requrired}} </li>
+	            </ul>      
+	        </div>
+	     	<div id="sub">
+	        	<input type="submit" value="Submit" >
+	        </div>
+	    </form>
+    </div>
+<!--实现搜索时实时提示的功能-->
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+    // 实现输入框提示
+$(document).ready(function(){  //文件加载后执行程序
+    $("#id_Microorganism").keyup(function(){     //键盘按下事件，每次键盘按下后向服务器请求数据实时更新
+        var input=$("#id_Microorganism").val();  //获取输入框的值
+        $.ajax({                         //ajax异步请求数据
+            url:"/organ_ajax/",
+            type:"POST",
+            data:{'input':input},
+            async:true,
+            success:function(data){
+                //console.log(data)
+                data=data.split('$')
+                var str=''
+                for (var i=0;i<data.length;i++){
+                    //$("#id_Input").append('<br>'+data[i]+'</br>')
+                    str+="<li>"+data[i]+"</li>"
+                };
+                //将数据展示在下拉框上，实时刷新
+                document.getElementById("organ_result").innerHTML = str;
+                $("#organ_suggest").show().css({
+                    top:$("#Sel1").offset().top-55,
+                    left:$("#Sel1").offset().left+12,
+                    position:'absolute'   //可以覆盖在原来的页面上
+                });
+            }
+        });
+    });
+    //点击input框隐藏下拉框
+    $(document).bind('click',function(){
+        $("#organ_suggest").hide();
+    })
+    /*$("#id_Input").click(function(){
+        $("#input_suggest").hide();
+    });*/
+    $("#organ_result").delegate('li','click',function(){
+        var val=$(this).text();
+        val=val.split(':')[1]
+        $("#id_Microorganism").val(val);
+    });
+});
+</script>
+
+<script type="text/javascript">
+    // 实现输入框提示
+$(document).ready(function(){  //文件加载后执行程序
+    $("#id_Input").keyup(function(){     //键盘按下事件，每次键盘按下后向服务器请求数据实时更新
+        var input=$("#id_Input").val(); 
+        //获取输入框的值
+        $.ajax({                         //ajax异步请求数据
+            url:"/input_ajax/",
+            type:"POST",
+            data:{'input':input},
+            async:false,
+            success:function(data){
+                console.log(data)
+                data=data.split('$')
+                var str=''
+                for (var i=0;i<data.length;i++){
+                    //$("#id_Input").append('<br>'+data[i]+'</br>')
+                    name=data[i].split()
+                    str+="<li>"+data[i]+"</li>"
+                };
+                //将数据展示在下拉框上，实时刷新
+                document.getElementById("input_result").innerHTML = str;
+                $("#input_suggest").show().css({
+                    top:$("#Sel1").offset().top-25,
+                    left:$("#Sel1").offset().left+12,
+                    position:'absolute'   //可以覆盖在原来的页面上
+                });
+            }
+        });
+    });
+    //点击input框隐藏下拉框
+    $(document).bind('click',function(){
+        $("#input_suggest").hide();
+    })
+    /*$("#id_Input").click(function(){
+        $("#input_suggest").hide();
+    });*/
+    $("#input_result").delegate('li','click',function(){
+        var val=$(this).text();
+        //val=val.split('--')[1]
+        $("#id_Input").val(val);
+    });
+});
+</script>
+<script type="text/javascript">
+    //实现输出框提示
+$(document).ready(function(){  //文件加载后执行程序
+    $("#id_Output").keyup(function(){     //键盘按下事件，每次键盘按下后向服务器请求数据实时更新
+        var input=$("#id_Output").val();  //获取输入框的值
+        $.ajax({                         //ajax异步请求数据
+            url:"/input_ajax/",
+            type:"POST",
+            data:{'input':input},
+            async:false,
+            success:function(data){
+                //console.log(data)
+                data=data.split('$')
+                var str=''
+                for (var i=0;i<data.length;i++){
+                    //$("#id_Input").append('<br>'+data[i]+'</br>')
+                    str+="<li>"+data[i]+"</li>"
+                };
+                //将数据展示在下拉框上，实时刷新
+                document.getElementById("output_result").innerHTML = str;
+                $("#output_suggest").show().css({
+                    top:$("#Sel1").offset().top+5,
+                    left:$("#Sel1").offset().left+12,
+                    position:'absolute'   //可以覆盖在原来的页面上
+                });
+            }
+        });
+    });
+    //点击input框隐藏下拉框
+    $(document).bind('click',function(){
+        $("#output_suggest").hide();
+    })
+    /*$("#id_Input").click(function(){
+        $("#input_suggest").hide();
+    });*/
+    $("#output_result").delegate('li','click',function(){
+        var val=$(this).text();
+        //val=val.split('--')[1]
+        $("#id_Output").val(val);
+    });
+});
+</script>
+    <ul class="tabs">
+        <li>Wanna a path to a dreamy compound?</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Adjust the weights of different criteria;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Enter required or not required compound;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Find more detailed pathway information;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Support one-direction search.</li>
+    </ul>
+
+	
+     <div id="pattern">
+        <img class="photo" src="/static/img/backo.png" width="100%">
+    </div>  
+    <div class="left" >
+       <a href="/multi_sysytem/"> 
+        <img class="le" src="/static/img/left.png" width="50px"></a>
+    </div>   
+    <div class="right" >
+        <a href="/recommendation/"> 
+        <img class="ri" src="/static/img/right.png" width="50px"></a>
+    </div>
+</body>
+</html>
+
+  

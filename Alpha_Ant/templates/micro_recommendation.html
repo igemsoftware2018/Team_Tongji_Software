@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>Organism Recommendation</title>
+     <link href="/static/css/styles2.css" type="text/css"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/favicon4.ico" >
+    <meta http-equiv="page-Enter" content="revealTrans(Duration=3.0,Transition=23)">
+    <meta http-equiv="page-Exit"content="revealTrans(Duration=1.0,Transition=12)">
+
+</head>
+<body>
+    <div class=.bg-pan-left></div>
+    <div id="logo"><a href="/Alpha ant/">
+        <img class="photo" src="/static/img/logo1.png" width="85px"></a>
+    </div>
+    <h1 align="center">Organism Recommendation</h1>
+    <div class="fun">
+        <ul id ="fun">
+            <li id="li1"><a href="/search/">- Ordinary Search</a></li>
+            <li id="li2"><a href="/recommendation/"><span id="one">- Organism Recommendation</span></a></li>
+            <li id="li3"><a href="/multi_sysytem/">-SMILES  Similarity</a></li>
+        </ul>        
+    </div>
+
+    <div class="slide" id="two">
+    	<form action="/recom_results/" method="get">	
+	       	<div class="Sel" id="Sel1" >
+	            <ul id="select">
+	                <!-- <h3>Select</h3> -->
+	                <li> Input :{{form.Input}} </li>  
+		            <li> Output :{{form.Output}} </li> 
+		            <li> Maxlength :{{form.MaxLength}} </li>
+		            <li> Max Display :{{form.result_conservation}} </li> 
+	           </ul>
+	        </div>
+	        <div id="sub">
+	        	<input type="submit" value="Submit" >
+	        </div>
+	    </form>
+    </div> 
+
+    <ul class="tabs">
+        <li>Don't know which expression system to use?</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Rank all possible organisms through proper score system;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Choose the best organism and try it in experiment;</li>
+        <li style="display:list-item; list-style-type:disc; margin-left:1em">Also support one-direction search.</li>
+    </ul>
+    
+	
+    <div id="pattern">
+            <img class="photo" src="/static/img/back3.png" width="100%">
+    </div>  
+    <div class="left" >
+        <a href="/search/"> 
+        <img class="le" src="/static/img/left.png" width="50px"></a>
+    </div>   
+    <div class="right" > 
+        <a href="/multi_sysytem/">   
+        <img class="ri" src="/static/img/right.png" width="50px"></a>
+    </div>
+</body>
+</html>
+
+  
