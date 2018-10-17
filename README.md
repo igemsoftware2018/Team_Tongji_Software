@@ -6,8 +6,11 @@ Click here to use [***Alpha Ant***](http://118.31.56.237:8099/Alpha%20ant/)
 You can also download this file and use our tool locally.
 
 ## Requirements
-  Before using our tool, you should pay attention to theses requirements:
+  If you want to use our tool locally, you should pay attention to theses requirements:
   * Python >= 3.5
   * Django >= 2.0
   * RDKit: a collection of cheminformatics software
-  * cobra
+  * cobra: a tool used for genome-scale modeling of metabolic networks in both prokaryotes and eukaryotes
+
+## How to use Alpha Ant?
+  After satisfying these requerement, you can start our project by using "python manage.py runserver" in cmd. Then the website will be generated according to the local ip. For example, "http://127.0.0.1:8000/Alpha%20ant/"
