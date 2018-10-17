@@ -8,3 +8,6 @@ You can also download this file and use our tool locally.
 ## Requirements
   Before using our tool, you should pay attention to theses requirements:
   * Python >= 3.5
+  * Django >= 2.0
+  * RDKit: a collection of cheminformatics software
+  * cobra
