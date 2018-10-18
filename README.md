@@ -28,8 +28,8 @@ You can also download this file and use our tool locally.
       ![example](http://2018.igem.org/wiki/images/a/a1/T--Tongji-Software--django.png)
   
   * Enter the web address in the browser, and use our tool locally.
-  ** [Here is the video about how to use Alpha Ant](http://2018.igem.org/Team:Tongji-Software/Project#Demonstrate)
-  ** If you want to know more about our project. Please come to our [iGEM wiki] (http://2018.igem.org/Team:Tongji-Software)
+  ** [Here is the video about how to use Alpha Ant](http://2018.igem.org/Team:Tongji-Software/Project#Demonstrate) **
+  ** If you want to know more about our project. Please come to our [iGEM wiki] (http://2018.igem.org/Team:Tongji-Software) **
 
 
 
