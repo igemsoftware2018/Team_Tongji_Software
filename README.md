@@ -1,4 +1,4 @@
-[Alpha Ant](http://2018.igem.org/wiki/images/9/9d/T--Tongji-Software--logo4.png)
+![Alpha Ant](http://2018.igem.org/wiki/images/9/9d/T--Tongji-Software--logo4.png)
 # [Project of Tongji_Software](http://2018.igem.org/Team:Tongji-Software)
 
 Welcome to use **Alpha Ant**, a computational tool for pathway design and reconstruction. With full consideration of metabolic burden and some useful functions, we provide an efficient and powerful pathway design guide.
