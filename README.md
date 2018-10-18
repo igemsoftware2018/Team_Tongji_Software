@@ -29,10 +29,10 @@ You can also download this file and use our tool locally.
   
   * Enter the web address in the browser, and use our tool locally.
   
-  [**Here is the video about how to use Alpha Ant**](http://2018.igem.org/Team:Tongji-Software/Project#Demonstrate)
+    [**Here is the video about how to use Alpha Ant**](http://2018.igem.org/Team:Tongji-Software/Project#Demonstrate)
   
-  **If you want to know more about our project. Please come to our [iGEM wiki](http://2018.igem.org/Team:Tongji-Software)**
+    **If you want to know more about our project. Please come to our [iGEM wiki](http://2018.igem.org/Team:Tongji-Software)**
+    ###
 
 
-
-### Have fun using Alpha Ant.
+## Have fun using Alpha Ant!!!
