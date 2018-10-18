@@ -24,8 +24,8 @@ You can also download this file and use our tool locally.
    `cd Team_Tongji_Software/Alpha_Ant`
    `python manage.py runserver`  
   
-  Then the website will be generated according to the local ip. For example, "http://127.0.0.1:8000/Alpha%20ant/".
-  ![example](http://2018.igem.org/wiki/images/a/a1/T--Tongji-Software--django.png)
+      Then the website will be generated according to the local ip. For example, "http://127.0.0.1:8000/Alpha%20ant/".
+      ![example](http://2018.igem.org/wiki/images/a/a1/T--Tongji-Software--django.png)
   
   * Enter the web address in the browser, and use our tool locally.
  
