@@ -16,10 +16,20 @@ You can also download this file and use our tool locally.
 ## How to use Alpha Ant?
   **We strongly recommend to use our [web tool](http://118.31.56.237:8099/Alpha%20ant/), which can search with high-speed**
   
-  Still, you can download our tool and use locally by Django. After satisfying these requerement, you can start our project by using "python manage.py runserver" in cmd. Then the website will be generated according to the local ip. For example, "http://127.0.0.1:8000/Alpha%20ant/".
+  Still, you can download our tool and use locally by Django after satisfying the requerements. 
+  
+  * download
+   `git clone https://github.com/igemsoftware2018/Team_Tongji_Software.git`
+  * run python
+   `cd Team_Tongji_Software/Alpha_Ant`
+   `python manage.py runserver`  
+  
+  Then the website will be generated according to the local ip. For example, "http://127.0.0.1:8000/Alpha%20ant/".
   ![example](http://2018.igem.org/wiki/images/a/a1/T--Tongji-Software--django.png)
+  
+  * Enter the web address in the browser, and use our tool locally.
  
- `git clone https://github.com/igemsoftware2018/Team_Tongji_Software.git`
+
 
 
 ### Enter the link above in browser.Have fun using Alpha Ant.
