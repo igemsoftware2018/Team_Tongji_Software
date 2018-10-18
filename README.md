@@ -32,4 +32,4 @@ You can also download this file and use our tool locally.
 
 
 
-### Enter the link above in browser.Have fun using Alpha Ant.
+### Have fun using Alpha Ant.
